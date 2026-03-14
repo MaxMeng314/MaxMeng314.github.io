@@ -5,6 +5,7 @@
 <title>To 李月白</title>
 
 <style>
+/* 1. 页面淡入动画 */
 body {
     background: #f2f7ff;
     font-family: "Times New Roman", "Songti SC", serif;
@@ -12,20 +13,32 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
+    animation: fadeIn 1.8s ease;
 }
 
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 信纸主体 */
 .paper {
     background: #fffdf7;
     width: 70%;
     padding: 60px 80px;
     margin: 60px 0;
     border: 1px solid #e0dccc;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    position: relative;
     line-height: 1.8;
     font-size: 18px;
+    position: relative;
+
+    /* 4. 柔光光晕 */
+    box-shadow:
+        0 0 20px rgba(0,0,0,0.1),
+        0 0 60px rgba(91,139,255,0.15);
 }
 
+/* 信纸横线 */
 .paper::before {
     content: "";
     position: absolute;
@@ -39,11 +52,13 @@ body {
     pointer-events: none;
 }
 
+/* 手写字体 */
 .handwrite {
     font-family: "Bradley Hand", "KaiTi", cursive;
     font-size: 20px;
 }
 
+/* 标题 */
 .title {
     font-size: 28px;
     margin-bottom: 30px;
@@ -51,20 +66,44 @@ body {
     font-family: "Bradley Hand", cursive;
 }
 
+/* 3. 心跳动画 */
 .heart {
     color: #5b8bff;
     font-size: 22px;
     margin-left: 4px;
+    display: inline-block;
+    animation: heartbeat 1.2s infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.25); }
+    50% { transform: scale(1); }
+    70% { transform: scale(1.25); }
+    100% { transform: scale(1); }
+}
+
+/* 7. 文字轻微浮动（温柔感） */
+.handwrite p {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(2px); }
+    100% { transform: translateY(0px); }
 }
 </style>
 
 </head>
 
 <body>
+
 <div class="paper handwrite">
 
 <div class="title">To 李月白 <span class="heart">💙</span></div>
 
+<!-- 你的正文保持不变，我未做任何修改 -->
 <p>那天晚上，我躺在床上抱着电脑想了很久很久：想我们的开始，一起经历过的事，未来，甚至很久很久以后，我们是否还会是那样亲密，还是成为“最熟悉的陌生人”。我（那天）也在惶恐在将来不知何时是否会失去你，也不想你迁就我。或许缘分这个东西，永远想不透，谁也不知道下一刻会发生什么，就像一年前的我们，也未曾能想到，在最僵硬的那一周之后，能引出无数值得回忆，珍贵无比的经历。</p>
 
 <p>是啊，已经一年了。</p>
@@ -88,5 +127,28 @@ body {
 <p>Max</p>
 
 </div>
+
+<!-- 2. 点击飘心 -->
+<script>
+document.addEventListener("click", function(e) {
+    const heart = document.createElement("div");
+    heart.textContent = "💙";
+    heart.style.position = "fixed";
+    heart.style.left = e.clientX + "px";
+    heart.style.top = e.clientY + "px";
+    heart.style.fontSize = "24px";
+    heart.style.opacity = 1;
+    heart.style.transition = "all 1s ease-out";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.style.top = (e.clientY - 60) + "px";
+        heart.style.opacity = 0;
+    }, 10);
+
+    setTimeout(() => heart.remove(), 1000);
+});
+</script>
+
 </body>
 </html>
