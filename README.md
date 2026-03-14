@@ -195,6 +195,8 @@ Max
 
 <script>
 document.addEventListener("click", function(e) {
+	if (e.target.closest("#envelope")) return;
+	
     const heart = document.createElement("div");
     heart.textContent = "💙";
     heart.style.position = "fixed";
