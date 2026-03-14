@@ -88,13 +88,13 @@ body {
 
 /* 信封主体（buff 牛皮纸） */
 .envelope-box {
-    width: 360px;
-    height: 240px;
+    width: 480px;   /* 更大 */
+    height: 320px;  /* 更大 */
     background: #e6d3b3;
-    border: 2px solid #c2a878;
+    border: 3px solid #c2a878;
     position: relative;
-    box-shadow: 0 0 25px rgba(120,100,70,0.25);
-    border-radius: 4px;
+    box-shadow: 0 0 30px rgba(120,100,70,0.25);
+    border-radius: 6px;
     overflow: hidden;
 }
 
@@ -104,7 +104,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 120px;
+    height: 160px; /* 更大盖子 */
     background: #d9c3a3;
     clip-path: polygon(0 0, 100% 0, 50% 100%);
     transform-origin: top;
@@ -112,18 +112,18 @@ body {
     z-index: 2;
 }
 
-/* 邮票 */
+/* 邮票（更大） */
 .stamp {
     position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 70px;
-    height: 70px;
+    top: 18px;
+    right: 18px;
+    width: 110px;   /* 更大 */
+    height: 110px;  /* 更大 */
     background-image: url('Stamp.jpg');
     background-size: cover;
     background-position: center;
-    border: 3px solid #fff;
-    box-shadow: 0 0 5px rgba(0,0,0,0.25);
+    border: 4px solid #fff;
+    box-shadow: 0 0 6px rgba(0,0,0,0.25);
     transform: rotate(5deg);
     z-index: 3;
 }
@@ -131,10 +131,10 @@ body {
 /* 蓝色爱心封口 */
 #seal-heart {
     position: absolute;
-    top: 95px;
+    top: 135px; /* 调整位置适配更大信封 */
     left: 50%;
     transform: translateX(-50%);
-    font-size: 38px;
+    font-size: 48px; /* 更大 */
     color: #5b8bff;
     animation: heartbeat-slow 2.2s infinite;
     z-index: 4;
@@ -174,7 +174,7 @@ body {
         <div class="stamp"></div>
         <div id="seal-heart">💙</div>
     </div>
-    <div style="margin-top:25px; font-size:22px; color:#5b6ea8;">点击拆开信封</div>
+    <div style="margin-top:30px; font-size:24px; color:#5b6ea8;">点击拆开信封</div>
 </div>
 
 <!-- 信内容 -->
@@ -231,10 +231,4 @@ document.addEventListener("click", function(e) {
 <!-- 信封翻盖打开 + 信内容淡入 -->
 <script>
 document.getElementById("envelope").onclick = function() {
-    document.getElementById("lid").style.transform = "rotateX(-120deg)";
-    document.getElementById("seal-heart").style.opacity = 0;
-
-    setTimeout(() => {
-        document.getElementById("envelope").style.opacity = 0;
-    }, 800);
-
+    document.getElementById("lid").style.transform
