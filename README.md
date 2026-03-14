@@ -31,6 +31,8 @@ body {
     line-height: 1.8;
     font-size: 18px;
     position: relative;
+    opacity: 0;
+    transition: opacity 1.2s ease;
 
     /* 柔光光晕 */
     box-shadow:
@@ -58,20 +60,6 @@ body {
     font-size: 20px;
 }
 
-/* 心跳动画（用于正文中的心） */
-.heart-inline {
-    display: inline-block;
-    animation: heartbeat 1.2s infinite;
-}
-
-@keyframes heartbeat {
-    0% { transform: scale(1); }
-    30% { transform: scale(1.25); }
-    50% { transform: scale(1); }
-    70% { transform: scale(1.25); }
-    100% { transform: scale(1); }
-}
-
 /* 文字轻微浮动 */
 .handwrite p {
     animation: float 6s ease-in-out infinite;
@@ -83,45 +71,76 @@ body {
     100% { transform: translateY(0px); }
 }
 
-/* 封面全屏层 */
-#cover {
+/* 封面信封 */
+#envelope {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: black;
+    background: #fffdf7;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     z-index: 9999;
     cursor: pointer;
-    opacity: 1;
     transition: opacity 1s ease;
 }
 
-/* 封面图片 */
-#cover-img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: cover;
+/* 信封图形 */
+.envelope-box {
+    width: 260px;
+    height: 180px;
+    background: #ffffff;
+    border: 2px solid #b5c7ff;
+    position: relative;
+    box-shadow: 0 0 20px rgba(91,139,255,0.2);
 }
 
-/* 点击提示文字 */
-#click-tip {
+/* 信封上盖 */
+.envelope-box::before {
+    content: "";
     position: absolute;
-    bottom: 40px;
-    font-size: 22px;
-    color: white;
-    opacity: 0.8;
-    animation: blink 1.5s infinite;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: 90px;
+    background: #e8eeff;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 
-@keyframes blink {
-    0% { opacity: 0.3; }
-    50% { opacity: 1; }
-    100% { opacity: 0.3; }
+/* 蓝色爱心封口 */
+#seal-heart {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    color: #5b8bff;
+    animation: heartbeat-slow 2.2s infinite;
+}
+
+@keyframes heartbeat-slow {
+    0% { transform: translateX(-50%) scale(1); }
+    30% { transform: translateX(-50%) scale(1.25); }
+    50% { transform: translateX(-50%) scale(1); }
+    70% { transform: translateX(-50%) scale(1.25); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+/* 结尾蓝心慢跳 */
+.heart-inline {
+    display: inline-block;
+    animation: heartbeat-slower 3.5s infinite;
+}
+
+@keyframes heartbeat-slower {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.25); }
+    50% { transform: scale(1); }
+    70% { transform: scale(1.25); }
+    100% { transform: scale(1); }
 }
 </style>
 
@@ -129,18 +148,19 @@ body {
 
 <body>
 
-<!-- 封面层（替换 your-photo.jpg 为你的图片路径） -->
-<div id="cover">
-    <img src="your-photo.jpg" id="cover-img">
-    <div id="click-tip">点击进入</div>
+<!-- 信封封面 -->
+<div id="envelope">
+    <div class="envelope-box">
+        <div id="seal-heart">💙</div>
+    </div>
+    <div style="margin-top:20px; font-size:22px; color:#5b6ea8;">点击拆开信封</div>
 </div>
 
-<div class="paper handwrite">
+<!-- 信内容 -->
+<div class="paper handwrite" id="letter">
 
-<!-- 标题（已改成正文同款字体） -->
 <p style="font-size:20px; margin-bottom:30px;">To Bella，</p>
 
-<!-- 正文（已替换 & 已在“我爱你💙。”处加入心跳蓝心） -->
 <p>那天晚上，我躺在床上抱着电脑想了很久很久：想我们的开始，一起经历过的事，未来，甚至很久以后，我们是否还会是那样亲密，还是成为“最熟悉的陌生人”。我（那天）也在惶恐在将来不知何时是否会失去你，也不想你迁就我。或许缘分这个东西，永远想不透，谁也不知道下一刻会发生什么，就像一年前的我们，也未能想到，在最僵硬的那一周之后，能引出无数值得回忆，珍贵无比的经历。</p>
 
 <p>是啊，已经一年了。</p>
@@ -187,12 +207,13 @@ document.addEventListener("click", function(e) {
 });
 </script>
 
-<!-- 封面淡出逻辑 -->
+<!-- 信封淡出 + 信内容淡入 -->
 <script>
-document.getElementById("cover").onclick = function() {
+document.getElementById("envelope").onclick = function() {
     this.style.opacity = 0;
     setTimeout(() => {
         this.style.display = "none";
+        document.getElementById("letter").style.opacity = 1;
     }, 1000);
 };
 </script>
