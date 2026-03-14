@@ -14,6 +14,18 @@ body {
     justify-content: center;
     animation: fadeIn 1.8s ease;
 }
+.envelope-note {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    font-family: "Bradley Hand", cursive;
+    font-size: 22px;
+    color: #5b6ea8;
+    opacity: 0.9;
+    line-height: 1.3;
+    z-index: 10;
+}
+	
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
@@ -161,6 +173,10 @@ body {
 
 <div id="envelope">
     <div class="envelope-box">
+		<div class="envelope-note">
+   	 		To: Bella<br>
+    		From: Max
+		</div>
         <div class="envelope-lid" id="lid"></div>
         <div class="stamp"></div>
         <div id="seal-heart">💙</div>
