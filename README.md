@@ -33,8 +33,6 @@ body {
     position: relative;
     opacity: 0;
     transition: opacity 1.2s ease;
-
-    /* 柔光光晕 */
     box-shadow:
         0 0 20px rgba(0,0,0,0.1),
         0 0 60px rgba(91,139,255,0.15);
@@ -71,14 +69,14 @@ body {
     100% { transform: translateY(0px); }
 }
 
-/* 封面信封 */
+/* 封面信封背景 */
 #envelope {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: #fffdf7;
+    background: #f2e7d5;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,37 +86,58 @@ body {
     transition: opacity 1s ease;
 }
 
-/* 信封图形 */
+/* 信封主体（buff 牛皮纸） */
 .envelope-box {
-    width: 260px;
-    height: 180px;
-    background: #ffffff;
-    border: 2px solid #b5c7ff;
+    width: 360px;
+    height: 240px;
+    background: #e6d3b3;
+    border: 2px solid #c2a878;
     position: relative;
-    box-shadow: 0 0 20px rgba(91,139,255,0.2);
+    box-shadow: 0 0 25px rgba(120,100,70,0.25);
+    border-radius: 4px;
+    overflow: hidden;
 }
 
-/* 信封上盖 */
-.envelope-box::before {
-    content: "";
+/* 信封上盖（可翻转） */
+.envelope-lid {
     position: absolute;
-    top: -2px;
-    left: -2px;
-    width: calc(100% + 4px);
-    height: 90px;
-    background: #e8eeff;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: #d9c3a3;
     clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    transition: transform 1s ease;
+    z-index: 2;
+}
+
+/* 邮票 */
+.stamp {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 70px;
+    height: 70px;
+    background-image: url('Stamp.jpg');
+    background-size: cover;
+    background-position: center;
+    border: 3px solid #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.25);
+    transform: rotate(5deg);
+    z-index: 3;
 }
 
 /* 蓝色爱心封口 */
 #seal-heart {
     position: absolute;
-    top: 70px;
+    top: 95px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 32px;
+    font-size: 38px;
     color: #5b8bff;
     animation: heartbeat-slow 2.2s infinite;
+    z-index: 4;
 }
 
 @keyframes heartbeat-slow {
@@ -151,9 +170,11 @@ body {
 <!-- 信封封面 -->
 <div id="envelope">
     <div class="envelope-box">
+        <div class="envelope-lid" id="lid"></div>
+        <div class="stamp"></div>
         <div id="seal-heart">💙</div>
     </div>
-    <div style="margin-top:20px; font-size:22px; color:#5b6ea8;">点击拆开信封</div>
+    <div style="margin-top:25px; font-size:22px; color:#5b6ea8;">点击拆开信封</div>
 </div>
 
 <!-- 信内容 -->
@@ -207,16 +228,13 @@ document.addEventListener("click", function(e) {
 });
 </script>
 
-<!-- 信封淡出 + 信内容淡入 -->
+<!-- 信封翻盖打开 + 信内容淡入 -->
 <script>
 document.getElementById("envelope").onclick = function() {
-    this.style.opacity = 0;
-    setTimeout(() => {
-        this.style.display = "none";
-        document.getElementById("letter").style.opacity = 1;
-    }, 1000);
-};
-</script>
+    document.getElementById("lid").style.transform = "rotateX(-120deg)";
+    document.getElementById("seal-heart").style.opacity = 0;
 
-</body>
-</html>
+    setTimeout(() => {
+        document.getElementById("envelope").style.opacity = 0;
+    }, 800);
+
